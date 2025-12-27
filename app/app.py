@@ -5,7 +5,7 @@ from wordcloud import WordCloud
 import os
 
 from app.Model.clickbait_detection.hybrid import HybridClickbaitDetector
-from app.collector.fetch_news1 import fetch_news1
+from app.services.news_service import get_latest_news
 from app.Model.Text_summerizer import tweet_generator
 
 st.set_page_config(page_title="News Analyzer", layout="wide")
@@ -59,7 +59,7 @@ st.markdown(page_bg, unsafe_allow_html=True)
 
 
 detector = HybridClickbaitDetector()
-data_dir = "newsapi_daily_data"
+data_dir = "../newsapi_daily_data"
 os.makedirs(data_dir, exist_ok=True)
 
 st.sidebar.title("Navigation")
@@ -76,7 +76,7 @@ if page == "Home":
         st.info("This tool analyzes news headlines for clickbait and provides summaries.")
     with col2:
         if st.button("Refresh News!"):
-            news_df = fetch_news1()
+            news_df = get_latest_news()
             if news_df is not None and not news_df.empty:
                 st.session_state["home_news"] = news_df.head(10)
 
@@ -102,7 +102,7 @@ elif page == "Clickbait Detection":
 
         if st.button("Fetch Latest News"):
             with st.spinner("Fetching news... please wait."):
-                news_df = fetch_news1()
+                news_df = get_latest_news()
 
                 if news_df is None or news_df.empty:
                     st.warning("No articles found today.")
