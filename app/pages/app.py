@@ -2,11 +2,10 @@ import streamlit as st
 import pandas as pd
 import matplotlib.pyplot as plt
 from wordcloud import WordCloud
-import os
 
 from app.services.news_service import get_latest_news
 from app.services.clickbait_service import analyze_article
-from app.Model.Text_summerizer import tweet_generator  # keep for now
+from app.services.summarization_service import summarize_article
 
 st.set_page_config(page_title="News Analyzer", layout="wide")
 
@@ -90,7 +89,7 @@ elif page == "Clickbait Detection":
                     content = row.get("content", "")
 
                     result = analyze_article(title, content)
-                    summary = tweet_generator(title, description)
+                    summary = summarize_article(title, description)
 
                     results.append({
                         "title": title,
@@ -126,7 +125,7 @@ elif page == "Clickbait Detection":
         if st.button("Detect Clickbait"):
             if title_input.strip():
                 result = analyze_article(title_input, content_input)
-                summary = tweet_generator(title_input, content_input)
+                summary = summarize_article(title_input, content_input)
 
                 if result["is_clickbait"]:
                     st.error("🔴 Clickbait detected")
