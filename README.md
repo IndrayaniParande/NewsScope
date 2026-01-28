@@ -82,6 +82,16 @@ This structure follows service-oriented design principles and enables scalabilit
 
 ---
 
+## demo
+
+## Website interface
+![App UI](demo3.png)
+
+## results
+![Prediction Result1](demo1.png)
+![Prediction Result2](demo2.png)
+
+
 ## Author
 
 ## Indrayani Parande    
